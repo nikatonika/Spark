@@ -1,0 +1,13 @@
+FROM python:3.11-slim
+
+WORKDIR /app
+
+RUN apt-get update && apt-get install -y gcc libpq-dev 
+
+COPY app.py /app
+
+RUN pip install --no-cache-dir psycopg2 kafka-python flask simplejson  # Установка библиотек psycopg2, Kafka и Flask
+
+EXPOSE 5000 
+
+CMD ["python", "app.py"] 

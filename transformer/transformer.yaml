@@ -1,0 +1,22 @@
+apiVersion: apps/v1  # Указывает API-версию для создания Deployment.
+kind: Deployment  # Определяет ресурс Deployment для управления состоянием приложения.
+metadata:
+  name: transformer-deployment  # Имя Deployment, используемое для идентификации.
+spec:
+  replicas: 1  # Количество реплик приложения.
+  selector:
+    matchLabels:
+      app: transformer  # Метка для связи с подами.
+  template:  # Шаблон для создания подов.
+    metadata:
+      labels:
+        app: transformer  # Метка, назначаемая создаваемым подам.
+    spec:
+      containers:
+      - name: transformer-container  # Имя контейнера.
+        image: niktyav/transformer-spark  
+        ports:
+        - containerPort: 5002  # Открытие порта 5002 внутри контейнера.
+        envFrom:
+            - configMapRef:
+                name: configs
